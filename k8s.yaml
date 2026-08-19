@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicd-lab-development
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cicd-lab-development
+  template:
+    metadata:
+      labels:
+        app: cicd-lab-development
+    spec:
+      containers:
+        - name: cicd-lab-development
+          image: localhost:5000/cicd-lab:development # akan diganti Jenkins
+          ports: [{ containerPort: 80 }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cicd-lab-development
+  namespace: default
+spec:
+  selector: { app: cicd-lab-development }
+  ports: [{ port: 80, targetPort: 80 }]
